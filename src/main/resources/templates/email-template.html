@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận đặt vé</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border: 1px solid #ddd; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 3px solid #007bff; }
+        .header h2 { color: #007bff; margin-bottom: 5px; }
+        .info, .ticket, .passenger { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #ddd; }
+        .info p, .ticket p, .passenger p { margin: 8px 0; }
+        .highlight { color: #d9534f; font-weight: bold; }
+        .footer { text-align: center; font-size: 14px; color: gray; padding-top: 15px; border-top: 2px solid #007bff; }
+        .footer p { margin: 5px 0; }
+        .footer strong { color: #007bff; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <p style="font-size: 18px; font-weight: bold; color: #333;">Xin chào <strong>[[${thongTinDatVe.idNguoiDat.ho}]] [[${thongTinDatVe.idNguoiDat.ten}]]</strong>,</p>
+        <p style="font-size: 16px; color: #555;">Cảm ơn bạn đã đặt vé với <strong style="color: #007bff;">Nhóm 14</strong>. Dưới đây là thông tin đặt vé của bạn:</p>
+    </div>
+
+    <div class="info">
+        <p><b>Hình thức thanh toán:</b> [[${thongTinDatVe.loaiThanhToan}]]</p>
+        <p><b>Tổng tiền:</b> <span class="highlight">[[${#numbers.formatInteger(thongTinDatVe.tongTien, 0, 'COMMA')}]] VND</span></p>
+        <p><b>Trạng thái thanh toán:</b> [[${thongTinDatVe.trangThaiThanhToan}]]</p>
+    </div>
+
+    <h3>Thông tin chuyến bay:</h3>
+    <div th:each="ve : ${danhSachVe}" class="ticket">
+        <p><b>Mã vé:</b> <span class="highlight">[[${ve.maVe}]]</span></p>
+        <h4>[[${ve.idChuyenBay.sanBayDi}]] ✈ [[${ve.idChuyenBay.sanBayDen}]]</h4>
+        <p><b>Ngày Giờ đi:</b> [[${ve.idChuyenBay.ngayGioDi}]] - <b>Ngày Giờ đến:</b> [[${ve.idChuyenBay.ngayGioDen}]]</p>
+        <p><b>Hãng bay:</b> [[${ve.idChuyenBay.hangBay}]]</p>
+        <p><b>Hạng vé:</b> [[${ve.hangVe}]]</p>
+        <p><b>Giá vé:</b> <span class="highlight">[[${#numbers.formatInteger(ve.giaVe, 0, 'COMMA')}]] VND</span></p>
+
+        <h4>Thông tin hành khách:</h4>
+        <div class="passenger">
+            <p><b>Họ tên:</b> [[${ve.idKhachHang.ho}]] [[${ve.idKhachHang.ten}]]</p>
+            <p><b>Ngày Sinh:</b> [[${ve.idKhachHang.ngaySinh}]]</p>
+            <p><b>Loại khách hàng:</b> [[${ve.idKhachHang.loaiKhachHang}]]</p>
+            <p th:if="${ve.idKhachHang.soHoChieu != null}"><b>Số hộ chiếu:</b> [[${ve.idKhachHang.soHoChieu}]]</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+        <p><strong>🌍 viettravelcompany</strong></p>
+        <p>☎️ Hotline: <strong>1900 1234</strong> | 📧 Email: <strong>support@company.com</strong></p>
+        <p>Chúc bạn có một chuyến bay an toàn và vui vẻ!</p>
+    </div>
+</div>
+</body>
+</html>
