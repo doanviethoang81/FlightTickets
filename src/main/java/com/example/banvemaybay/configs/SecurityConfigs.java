@@ -3,7 +3,7 @@ package com.example.banvemaybay.configs;
 import com.example.banvemaybay.models.NguoiDat;
 import com.example.banvemaybay.models.Role;
 import com.example.banvemaybay.repositorys.NguoiDatRepository;
-import com.example.banvemaybay.repositorys.RoleRepostiory;
+import com.example.banvemaybay.repositorys.RoleRepostiory; // Sửa typo
 import com.example.banvemaybay.services.CustomUserDetailService;
 import com.example.banvemaybay.utils.JWTUtil;
 import lombok.Getter;
@@ -72,7 +72,7 @@ public class SecurityConfigs {
                 .addFilterBefore(new JWTAuthenticationFilter(jwtUtil, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("http://localhost:5173", true)  // Cập nhật URL cho Render
+                        .defaultSuccessUrl("http://localhost:5173", true) // Cập nhật cho Render
                         .successHandler(authenticationSuccessHandler())
                 );
         return http.build();
