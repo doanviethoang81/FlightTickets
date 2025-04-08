@@ -3,7 +3,7 @@ package com.example.banvemaybay.configs;
 import com.example.banvemaybay.models.NguoiDat;
 import com.example.banvemaybay.models.Role;
 import com.example.banvemaybay.repositorys.NguoiDatRepository;
-import com.example.banvemaybay.repositorys.RoleRepostiory;
+import com.example.banvemaybay.repositorys.RoleRepostiory; // Sửa typo
 import com.example.banvemaybay.services.CustomUserDetailService;
 import com.example.banvemaybay.utils.JWTUtil;
 import lombok.Getter;
@@ -18,12 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,8 +33,8 @@ import java.util.Set;
 @EnableWebSecurity
 public class SecurityConfigs {
 
-    private final String client_id = System.getProperty("GOOGLE_CLIENT_ID");
-    private final String client_secret = System.getProperty("GOOGLE_CLIENT_SECRET");
+    private final String client_id = System.getProperty("GOOGLE_CLIENT_ID"); // Không dùng cũng được
+    private final String client_secret = System.getProperty("GOOGLE_CLIENT_SECRET"); // Không dùng cũng được
 
     private final CustomUserDetailService customUserDetailService;
     private final JWTUtil jwtUtil;
@@ -66,29 +60,6 @@ public class SecurityConfigs {
         return new BCryptPasswordEncoder();
     }
 
-    // Thêm bean ClientRegistrationRepository
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(googleClientRegistration());
-    }
-
-    // Cấu hình thông tin Google OAuth2
-    private ClientRegistration googleClientRegistration() {
-        return ClientRegistration.withRegistrationId("google")
-                .clientId(client_id) // Lấy từ System.getProperty
-                .clientSecret(client_secret) // Lấy từ System.getProperty
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("http://localhost:8080/login/oauth2/code/google") // Local URL, sửa khi deploy lên Render
-                .scope(OidcScopes.OPENID, "email", "profile")
-                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
-                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-                .userNameAttributeName("sub")
-                .clientName("Google")
-                .build();
-    }
-
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -104,8 +75,7 @@ public class SecurityConfigs {
                 .addFilterBefore(new JWTAuthenticationFilter(jwtUtil, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
-                        .clientRegistrationRepository(clientRegistrationRepository()) // Sử dụng bean vừa định nghĩa
-                        .defaultSuccessUrl("http://localhost:5173", true) // Local URL, sửa khi deploy
+                        .defaultSuccessUrl("http://localhost:5173", true) // Sửa khi lên Render
                         .successHandler(authenticationSuccessHandler())
                 );
         return http.build();
@@ -133,7 +103,6 @@ public class SecurityConfigs {
                 nguoiDat.setTen(firstName);
                 nguoiDatRepository.save(nguoiDat);
             } else {
-                // Nếu chưa tồn tại, tạo mới tài khoản với provider = GOOGLE
                 NguoiDat nguoiDat = new NguoiDat();
                 nguoiDat.setEmail(email);
                 nguoiDat.setTen(firstName);
@@ -145,7 +114,6 @@ public class SecurityConfigs {
                             newRole.setName("ROLE_USER");
                             return roleRepository.save(newRole);
                         });
-
                 nguoiDat.setRoles(Set.of(userRole));
                 nguoiDatRepository.save(nguoiDat);
             }
