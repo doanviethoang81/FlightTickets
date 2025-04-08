@@ -11,21 +11,13 @@ import java.util.*;
 @Configuration
 public class VNPAYConfig {
 
-    @Value("${payment.vnPay.url}")
-    private String vnp_PayUrl;
-    @Value("${payment.vnPay.returnUrl}")
-    private String vnp_ReturnUrl;
-    @Value("${payment.vnPay.tmnCode}")
-    private String vnp_TmnCode;
-
-    @Value("${payment.vnPay.secretKey}")
-    private String secretKey;
-    @Value("${payment.vnPay.version}")
-    private String vnp_Version;
-    @Value("${payment.vnPay.command}")
-    private String vnp_Command;
-    @Value("${payment.vnPay.orderType}")
-    private String orderType;
+    private final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+    private final String vnp_ReturnUrl = "https://flighttickets.onrender.com/api/v1/payment/vn-pay-callback";
+    private final String vnp_TmnCode = System.getProperty("VNPAY_TMN_CODE");
+    private final String secretKey = System.getProperty("VNPAY_HASH_SECRET");
+    private final String vnp_Version = "2.1.0";
+    private final String vnp_Command = "pay";
+    private final String orderType = "other";
 
     public Map<String, String> getVNPayConfig() {
         Map<String, String> vnpParamsMap = new HashMap<>();

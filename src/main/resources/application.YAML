@@ -29,10 +29,16 @@ api:
 
 payment:
   vnPay:
-    url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
     tmnCode: ${VNPAY_TMN_CODE}
     secretKey: ${VNPAY_HASH_SECRET}
-    returnUrl: https://flighttickets.onrender.com/api/v1/payment/vn-pay-callback
-    version: 2.1.0
-    command: pay
-    orderType: other
+
+
+#    payment:
+#      vnPay:
+#        url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+#        tmnCode: ${VNPAY_TMN_CODE}
+#        secretKey: ${VNPAY_HASH_SECRET}
+#        returnUrl: https://flighttickets.onrender.com/api/v1/payment/vn-pay-callback
+#        version: 2.1.0
+#        command: pay
+#        orderType: other

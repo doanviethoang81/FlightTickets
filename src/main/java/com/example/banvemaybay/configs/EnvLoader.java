@@ -19,10 +19,6 @@ public class EnvLoader {
         // VNPay
         setEnvIfMissing("VNPAY_TMN_CODE", dotenv);
         setEnvIfMissing("VNPAY_HASH_SECRET", dotenv);
-
-        // MoMo
-        setEnvIfMissing("MOMO_ACCESS_KEY", dotenv);
-        setEnvIfMissing("MOMO_SECRET_KEY", dotenv);
     }
 
     private static void setEnvIfMissing(String key, Dotenv dotenv) {
