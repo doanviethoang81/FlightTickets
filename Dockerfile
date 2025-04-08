@@ -1,27 +1,18 @@
-# Giai đoạn build
-FROM eclipse-temurin:21-jdk AS build
+FROM maven:3-openjdk-21 AS build
 
 WORKDIR /app
 
-# Copy tất cả vào container
 COPY . .
 
-# Cấp quyền thực thi cho mvnw (chỉ cần trên Unix/Linux)
 RUN chmod +x mvnw
 
-# Build project, skip test
-RUN ./mvnw clean package -DskipTests
+RUN mvnw clean package -DskipTests
 
-# Giai đoạn chạy
-FROM eclipse-temurin:21-jdk
+FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 
-# Copy file jar từ giai đoạn build
-COPY --from=build /app/target/*.jar app.jar
-
-# Expose cổng (nếu deploy lên Render thì mặc định là PORT env)
+COPY --from=build /app/target/DrComputer-0.0.1-SNAPSHOT.war drcomputer.war
 EXPOSE 8080
 
-# Lệnh chạy app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "drcomputer.war"]
