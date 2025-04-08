@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+@Getter
 @Configuration
 public class VNPAYConfig {
-    @Getter
+
     @Value("${payment.vnPay.url}")
     private String vnp_PayUrl;
     @Value("${payment.vnPay.returnUrl}")
@@ -18,7 +18,6 @@ public class VNPAYConfig {
     @Value("${payment.vnPay.tmnCode}")
     private String vnp_TmnCode;
 
-    @Getter
     @Value("${payment.vnPay.secretKey}")
     private String secretKey;
     @Value("${payment.vnPay.version}")
