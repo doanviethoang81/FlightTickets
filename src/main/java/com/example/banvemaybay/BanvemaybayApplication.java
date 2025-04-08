@@ -23,7 +23,17 @@ public class BanvemaybayApplication {
 		System.setProperty("SPRING_DATASOURCE_USERNAME", dbUser);
 		System.setProperty("SPRING_DATASOURCE_PASSWORD", dbPass);
 
+		if (dbUrl == null || dbUser == null || dbPass == null) {
+			Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+			dbUrl = dbUrl != null ? dbUrl : dotenv.get("SPRING_DATASOURCE_URL");
+			dbUser = dbUser != null ? dbUser : dotenv.get("SPRING_DATASOURCE_USERNAME");
+			dbPass = dbPass != null ? dbPass : dotenv.get("SPRING_DATASOURCE_PASSWORD");
+		}
+
+		System.setProperty("SPRING_DATASOURCE_URL", dbUrl);
+		System.setProperty("SPRING_DATASOURCE_USERNAME", dbUser);
+		System.setProperty("SPRING_DATASOURCE_PASSWORD", dbPass);
+
 		SpringApplication.run(BanvemaybayApplication.class, args);
 	}
-
 }
