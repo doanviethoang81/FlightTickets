@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/phieu_dat_ve")
+@RequestMapping("${api.prefix:/api/v1}/phieu_dat_ve")
 public class PhieuDatVeController {
     private final PhieuDatVeService phieuDatVeService;
 

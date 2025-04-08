@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("${api.prefix}/admin/post")
+@RequestMapping("${api.prefix:/api/v1}/admin/post")
 @RequiredArgsConstructor
 public class PostAdminController {
 

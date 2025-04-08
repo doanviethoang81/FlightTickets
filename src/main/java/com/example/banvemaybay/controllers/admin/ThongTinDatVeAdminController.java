@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("${api.prefix}/admin/thong_tin_dat_ve")
+@RequestMapping("${api.prefix:/api/v1}/admin/thong_tin_dat_ve")
 @RequiredArgsConstructor
 public class ThongTinDatVeAdminController {
 

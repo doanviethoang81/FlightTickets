@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("${api.prefix}/nguoi_dat")
+@RequestMapping("${api.prefix:/api/v1}/nguoi_dat")
 @RequiredArgsConstructor
 public class NguoiDatController {
 

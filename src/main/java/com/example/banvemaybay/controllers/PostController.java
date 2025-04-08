@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/posts")
+@RequestMapping("${api.prefix:/api/v1}/posts")
 public class PostController {
     @Autowired
     private PostService postService;

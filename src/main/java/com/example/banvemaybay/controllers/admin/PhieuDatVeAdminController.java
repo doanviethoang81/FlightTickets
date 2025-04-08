@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("${api.prefix}/admin/phieu_dat")
+@RequestMapping("${api.prefix:/api/v1}/admin/phieu_dat")
 @RequiredArgsConstructor
 public class PhieuDatVeAdminController {
 

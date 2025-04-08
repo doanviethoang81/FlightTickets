@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("${api.prefix}/admin/khach-hang")
+@RequestMapping("${api.prefix:/api/v1}/admin/khach-hang")
 public class KhachHangAdminController {
 
     private final KhachHangService khachHangService;

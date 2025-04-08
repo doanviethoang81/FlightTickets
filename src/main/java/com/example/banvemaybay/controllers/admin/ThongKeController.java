@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("${api.prefix}/admin/dashboard")
+@RequestMapping("${api.prefix:/api/v1}/admin/dashboard")
 @RequiredArgsConstructor
 public class ThongKeController {
 
