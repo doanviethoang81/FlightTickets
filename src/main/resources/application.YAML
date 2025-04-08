@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/banvemaybay?useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+
+server:
+  port: ${PORT:8080}
+
+api:
+  prefix: api/v1
+
+
+
+payment:
+  vnPay:
+    url: ${VNPAY_PAY_URL}
+    tmnCode: ${VNPAY_TMN_CODE}
+    secretKey: ${VNPAY_HASH_SECRET}
+    returnUrl: ${VNPAY_RETURN_URL}
+    version: ${VNPAY_VERSION}
+    command: ${VNPAY_COMMAND}
+    orderType: ${VNPAY_ORDER_TYPE}
+
+momo:
+  partnerCode:  ${MOMO_PARTNER_CODE}
+  accessKey: ${MOMO_ACCESS_KEY}
+  secretKey: ${MOMO_SECRET_KEY}
+  endpoint: https://test-payment.momo.vn/v2/gateway/api/create
+  returnUrl: http://localhost:8080/api/v1/payment/momo/payment-return
+  notifyUrl: http://localhost:8080/api/v1/payment/momo/payment-notify
+
