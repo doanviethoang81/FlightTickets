@@ -3,7 +3,7 @@ package com.example.banvemaybay.configs;
 import com.example.banvemaybay.models.NguoiDat;
 import com.example.banvemaybay.models.Role;
 import com.example.banvemaybay.repositorys.NguoiDatRepository;
-import com.example.banvemaybay.repositorys.RoleRepostiory; // Sửa typo
+import com.example.banvemaybay.repositorys.RoleRepostiory;
 import com.example.banvemaybay.services.CustomUserDetailService;
 import com.example.banvemaybay.utils.JWTUtil;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class SecurityConfigs {
     private NguoiDatRepository nguoiDatRepository;
 
     @Autowired
-    private RoleRepostiory roleRepository; // Sửa typo từ RoleRepostiory
+    private RoleRepostiory roleRepository;
 
     public SecurityConfigs(CustomUserDetailService customUserDetailService, JWTUtil jwtUtil) {
         this.customUserDetailService = customUserDetailService;
@@ -72,7 +72,7 @@ public class SecurityConfigs {
                 .addFilterBefore(new JWTAuthenticationFilter(jwtUtil, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("http://localhost:5173", true) // Cập nhật cho Render
+                        .defaultSuccessUrl("https://your-frontend.onrender.com", true) // Thay bằng URL frontend thực tế
                         .successHandler(authenticationSuccessHandler())
                 );
         return http.build();
@@ -91,7 +91,7 @@ public class SecurityConfigs {
             if (existingUser.isPresent()) {
                 NguoiDat nguoiDat = existingUser.get();
                 if ("LOCAL".equals(nguoiDat.getProvider())) {
-                    String redirectUrlError = "http://localhost:5173?error=" +
+                    String redirectUrlError = "https://your-frontend.onrender.com?error=" +
                             URLEncoder.encode("Tài khoản này đã đăng ký bằng email vui lòng đăng nhập bằng mật khẩu!", "UTF-8");
                     response.setHeader("Content-Type", "text/html; charset=UTF-8");
                     response.sendRedirect(redirectUrlError);
@@ -115,7 +115,7 @@ public class SecurityConfigs {
                 nguoiDatRepository.save(nguoiDat);
             }
             String tokenJWT = jwtUtil.generateToken(email, Set.of("ROLE_USER"));
-            String redirectUrl = "http://localhost:5173?name=" + URLEncoder.encode(firstName, "UTF-8")
+            String redirectUrl = "https://your-frontend.onrender.com?name=" + URLEncoder.encode(firstName, "UTF-8")
                     + "&avatar=" + avatar
                     + "&email=" + email
                     + "&token=" + tokenJWT;
