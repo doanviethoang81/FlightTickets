@@ -12,24 +12,4 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class KhachHangController {
 
-    @GetMapping("")
-    public ResponseEntity<String> getNguoiDat(){
-        return ResponseEntity.ok("hello");
-    }
-
-        @GetMapping("/{id}")
-    public ResponseEntity<String>  timVeDaDat(
-            @PathVariable("id") String id
-    ){
-            return ResponseEntity.ok("hello "+ id);
-    }
-
-    @PostMapping("")
-    public ResponseEntity<?> taoNguoiDat(
-            @RequestBody KhachHangDTO khachHangDTO
-    ) {
-        return ResponseEntity.ok("tạo kh thành công " + khachHangDTO);
-    }
-
-
 }

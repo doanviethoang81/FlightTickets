@@ -18,29 +18,9 @@ public class PhieuDatVeController {
     private final PhieuDatVeService phieuDatVeService;
 
     @GetMapping("")
-    public ResponseEntity<?> getNguoiDat(){
+    public ResponseEntity<?> getPhieuDatVe(){
         List<PhieuDatVe>  phieuDatVeList = phieuDatVeService.getAllPhieuDatVe();
         return ResponseEntity.ok(phieuDatVeList);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?>  timVeDaDat(
-            @PathVariable("id") Integer id
-    ){
-       try{
-//            PhieuDatVe phieuDatVe = phieuDatVeService.getPhieuDatVe(id);
-//            return ResponseEntity.ok(phieuDatVe);
-           return ResponseEntity.ok("oke");
-       } catch (Exception e) {
-
-           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-       }
-    }
-
-    @PostMapping("")
-    public ResponseEntity<?> taoNguoiDat(
-            @RequestBody PhieuDatVeDTO phieuDatVeDTO
-    ) {
-        return ResponseEntity.ok("tạo kh thành công " + phieuDatVeDTO);
-    }
 }
