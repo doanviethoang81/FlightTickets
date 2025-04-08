@@ -1,30 +1,27 @@
 # Giai đoạn build
-FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
+FROM eclipse-temurin:21-jdk AS build
 
 WORKDIR /app
 
-# Copy wrapper và pom trước để tận dụng cache layer của Docker
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-
-# Tải các dependency trước (nếu không có thay đổi thì cache lại)
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
-
-# Copy toàn bộ source code
+# Copy tất cả vào container
 COPY . .
 
-# Build project
+# Cấp quyền thực thi cho mvnw (chỉ cần trên Unix/Linux)
+RUN chmod +x mvnw
+
+# Build project, skip test
 RUN ./mvnw clean package -DskipTests
 
 # Giai đoạn chạy
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
-# Copy file WAR đã build
-COPY --from=build /app/target/DrComputer-0.0.1-SNAPSHOT.war drcomputer.war
+# Copy file jar từ giai đoạn build
+COPY --from=build /app/target/*.jar app.jar
 
+# Expose cổng (nếu deploy lên Render thì mặc định là PORT env)
 EXPOSE 8080
 
-# Chạy ứng dụng
-ENTRYPOINT ["java", "-jar", "drcomputer.war"]
+# Lệnh chạy app
+ENTRYPOINT ["java", "-jar", "app.jar"]
