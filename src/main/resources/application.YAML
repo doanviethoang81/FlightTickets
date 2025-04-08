@@ -31,16 +31,16 @@ api:
 
 payment:
   vnPay:
-    url: ${VNPAY_PAY_URL}
+    url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
     tmnCode: ${VNPAY_TMN_CODE}
     secretKey: ${VNPAY_HASH_SECRET}
-    returnUrl: ${VNPAY_RETURN_URL}
-    version: ${VNPAY_VERSION}
-    command: ${VNPAY_COMMAND}
-    orderType: ${VNPAY_ORDER_TYPE}
+    returnUrl: http://localhost:8080/api/v1/payment/vn-pay-callback
+    version: 2.1.0
+    command: pay
+    orderType: other
 
 momo:
-  partnerCode:  ${MOMO_PARTNER_CODE}
+  partnerCode:  MOMOTEST
   accessKey: ${MOMO_ACCESS_KEY}
   secretKey: ${MOMO_SECRET_KEY}
   endpoint: https://test-payment.momo.vn/v2/gateway/api/create
