@@ -3,7 +3,7 @@ package com.example.banvemaybay.configs;
 import com.example.banvemaybay.models.NguoiDat;
 import com.example.banvemaybay.models.Role;
 import com.example.banvemaybay.repositorys.NguoiDatRepository;
-import com.example.banvemaybay.repositorys.RoleRepostiory; // Sửa typo
+import com.example.banvemaybay.repositorys.RoleRepostiory;
 import com.example.banvemaybay.services.CustomUserDetailService;
 import com.example.banvemaybay.utils.JWTUtil;
 import lombok.Getter;
@@ -32,9 +32,6 @@ import java.util.Set;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigs {
-
-    private final String client_id = System.getProperty("GOOGLE_CLIENT_ID"); // Không dùng cũng được
-    private final String client_secret = System.getProperty("GOOGLE_CLIENT_SECRET"); // Không dùng cũng được
 
     private final CustomUserDetailService customUserDetailService;
     private final JWTUtil jwtUtil;
@@ -75,7 +72,7 @@ public class SecurityConfigs {
                 .addFilterBefore(new JWTAuthenticationFilter(jwtUtil, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("http://localhost:5173", true) // Sửa khi lên Render
+                        .defaultSuccessUrl("http://localhost:5173", true)  // Cập nhật URL cho Render
                         .successHandler(authenticationSuccessHandler())
                 );
         return http.build();
