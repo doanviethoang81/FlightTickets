@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
@@ -18,14 +19,14 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    // Cập nhật đường dẫn lưu ảnh vào thư mục mới
-    private final String uploadDir = "C:/D/WebsiteBanVeMayBay/banvemaybay/src/public/images/";
+    // Đường dẫn động: hoạt động cả khi local và Docker
+    private final String uploadDir = System.getProperty("user.dir") + "/images/";
 
-    // API lấy danh sách bài viết
     @GetMapping
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
     }
+
     @PostMapping
     public Post createPost(@RequestParam("title") String title,
                            @RequestParam("content") String content,
@@ -34,23 +35,23 @@ public class PostController {
         post.setTitle(title);
         post.setContent(content);
 
-        // Kiểm tra và lưu ảnh nếu có
         if (image != null && !image.isEmpty()) {
+            // Tạo tên ảnh duy nhất
             String imageName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-            String filePath = Paths.get(uploadDir, imageName).toString();
-            File uploadFolder = new File(uploadDir);
 
-            // Nếu thư mục chưa tồn tại thì tạo mới
+            // Tạo thư mục nếu chưa tồn tại
+            File uploadFolder = new File(uploadDir);
             if (!uploadFolder.exists()) {
                 uploadFolder.mkdirs();
             }
 
-            image.transferTo(new File(filePath));
+            // Lưu ảnh vào thư mục
+            Path filePath = Paths.get(uploadDir, imageName);
+            image.transferTo(filePath.toFile());
 
-            post.setImageUrl(imageName);
+            post.setImageUrl(imageName); // chỉ lưu tên ảnh
         }
 
         return postService.savePost(post);
     }
-
 }

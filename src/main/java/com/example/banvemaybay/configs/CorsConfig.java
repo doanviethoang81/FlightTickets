@@ -12,7 +12,7 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**") // Định nghĩa API nào cần CORS
+                registry.addMapping("/**") // Định nghĩa API nào cần CORS
                         .allowedOrigins("https://chude2-nhom14.netlify.app") // Cho phép từ FE
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true) // Cho phép gửi cookie
