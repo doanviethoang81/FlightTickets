@@ -94,6 +94,7 @@ public class NguoiDatController {
         }
     }
 
+    //check tài khoản nếu muốn đổi mật khẩu
     @GetMapping("/check-email/{email}")
     public ResponseEntity<?> getKiemTraLoaiTaiKhoan(@PathVariable String email) {
         Map<String, String> response = new HashMap<>();

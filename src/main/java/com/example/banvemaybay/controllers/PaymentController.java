@@ -56,11 +56,11 @@ public class PaymentController {
         if ("00".equals(status)) {
             thongTinDatVeService.updateTrangThaiThanhToan(decodedId, "Thành công");
             emailService.sendBookingConfirmationEmail(decodedId);
-            redirectUrl = "http://localhost:5173/payment-result?status=success";
+            redirectUrl = "https://chude2-nhom14.netlify.app/payment-result?status=success";
         } else if ("24".equals(status)) {
 
             thongTinDatVeService.updateTrangThaiThanhToan(decodedId, "Thất bại");
-            redirectUrl = "http://localhost:5173/payment-result?status=failure"; // Nếu thất bại, chuyển hướng kèm trạng thái
+            redirectUrl = "https://chude2-nhom14.netlify.app/payment-result?status=failure"; // Nếu thất bại, chuyển hướng kèm trạng thái
         }
 
         return ResponseEntity.status(HttpStatus.FOUND) // Mã 302 (redirect)

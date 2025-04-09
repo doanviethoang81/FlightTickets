@@ -90,9 +90,9 @@ public class SecurityConfigs {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/**").permitAll()
-                        .requestMatchers("/api/v1/admin/**").permitAll()
                         .requestMatchers("/api/v1/posts/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/api/v1/adminn/**").hasAuthority("ROLE_ADMIN") // Giới hạn quyền admin
                         .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())
@@ -100,7 +100,7 @@ public class SecurityConfigs {
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
                         .clientRegistrationRepository(clientRegistrationRepository()) // Sử dụng bean vừa định nghĩa
-                        .defaultSuccessUrl("http://localhost:5173", true)
+                        .defaultSuccessUrl("https://chude2-nhom14.netlify.app", true)
                         .successHandler(authenticationSuccessHandler())
                 );
         return http.build();
@@ -119,7 +119,7 @@ public class SecurityConfigs {
             if (existingUser.isPresent()) {
                 NguoiDat nguoiDat = existingUser.get();
                 if ("LOCAL".equals(nguoiDat.getProvider())) {
-                    String redirectUrlError = "http://localhost:5173?error=" +
+                    String redirectUrlError = "https://chude2-nhom14.netlify.app?error=" +
                             URLEncoder.encode("Tài khoản này đã đăng ký bằng email vui lòng đăng nhập bằng mật khẩu!", "UTF-8");
                     response.setHeader("Content-Type", "text/html; charset=UTF-8");
                     response.sendRedirect(redirectUrlError);
@@ -144,7 +144,7 @@ public class SecurityConfigs {
             }
 
             String tokenJWT = jwtUtil.generateToken(email, Set.of("ROLE_USER"));
-            String redirectUrl = "http://localhost:5173?name=" + URLEncoder.encode(firstName, "UTF-8") +
+            String redirectUrl = "https://chude2-nhom14.netlify.app?name=" + URLEncoder.encode(firstName, "UTF-8") +
                     "&avatar=" + avatar +
                     "&email=" + email +
                     "&token=" + tokenJWT;

@@ -13,7 +13,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**") // Định nghĩa API nào cần CORS
-                        .allowedOrigins("http://localhost:5173") // Cho phép từ FE
+                        .allowedOrigins("https://chude2-nhom14.netlify.app") // Cho phép từ FE
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true) // Cho phép gửi cookie
                         .exposedHeaders("Location"); // Quan trọng: Expose `Location`
