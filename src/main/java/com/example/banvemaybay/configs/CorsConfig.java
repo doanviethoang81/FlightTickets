@@ -14,9 +14,11 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("https://chude2-nhom14.netlify.app")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
                         .allowCredentials(true)
-                        .exposedHeaders("Location");
+                        .exposedHeaders("Location", "Access-Control-Allow-Origin")
+                        .maxAge(3600); // Cache preflight request
             }
         };
     }
