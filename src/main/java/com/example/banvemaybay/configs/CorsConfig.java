@@ -12,12 +12,13 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Định nghĩa API nào cần CORS
-                        .allowedOrigins("https://chude2-nhom14.netlify.app") // Cho phép từ FE
+                registry.addMapping("/**")
+                        .allowedOrigins("https://chude2-nhom14.netlify.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowCredentials(true) // Cho phép gửi cookie
-                        .exposedHeaders("Location"); // Quan trọng: Expose `Location`
+                        .allowCredentials(true)
+                        .exposedHeaders("Location");
             }
         };
     }
 }
+
