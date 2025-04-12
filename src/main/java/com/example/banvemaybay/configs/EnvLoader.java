@@ -19,6 +19,10 @@ public class EnvLoader {
         // VNPay
         setEnvIfMissing("VNPAY_TMN_CODE", dotenv);
         setEnvIfMissing("VNPAY_HASH_SECRET", dotenv);
+
+        setEnvIfMissing("CLOUDINARY_NAME", dotenv);
+        setEnvIfMissing("CLOUDINARY_KEY", dotenv);
+        setEnvIfMissing("CLOUDINARY_SECRET", dotenv);
     }
 
     private static void setEnvIfMissing(String key, Dotenv dotenv) {

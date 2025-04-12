@@ -5,7 +5,6 @@ import com.example.banvemaybay.models.*;
 import com.example.banvemaybay.repositorys.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +27,13 @@ public class NguoiDatService implements INguoiDatService{
     private final KhachHangRepository khachHangRepository;
     private final ChuyenBayRepository chuyenBayRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepostiory roleRepostiory;;
 
     @Override
-    public NguoiDatDTO timVeDaDatTheoSDT(String sdt) {
-        // Tìm người đặt theo số điện thoại
-        NguoiDat nguoiDat = nguoiDatRepository.findBySoDienThoai(sdt)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy vé của người đặt với số điện thoại: " + sdt));
+    public NguoiDatDTO timVeDaDatTheoGmail(String gmail) {
+        // Tìm người đặt theo gmail
+        NguoiDat nguoiDat = nguoiDatRepository.findByEmail(gmail)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy vé của người đặt với gmail: " + gmail));
 
         // Lấy danh sách thông tin đặt vé của người này
         List<ThongTinDatVe> danhSachThongTinDatVe = thongTinDatVeRepository.findByIdNguoiDat(nguoiDat);
@@ -105,6 +105,7 @@ public class NguoiDatService implements INguoiDatService{
 
             result.add(thongTinDatVeDTO);
         }
+        result.sort((a, b) -> b.getNgayDat().compareTo(a.getNgayDat()));
 
         // Chuyển đổi NguoiDat thành DTO và gán danh sách thông tin đặt vé
         NguoiDatDTO nguoiDatDTO = NguoiDatDTO.builder()
@@ -167,25 +168,31 @@ public class NguoiDatService implements INguoiDatService{
     }
 
     private NguoiDat luuNguoiDat(JsonNode contactInfo) {
-        String soDienThoai = contactInfo.get("phone").asText();
+        String email = contactInfo.get("email").asText();
 
-        // Kiểm tra nếu số điện thoại đã tồn tại
-        Optional<NguoiDat> nguoiDatOptional = nguoiDatRepository.findBySoDienThoai(soDienThoai);
+        // Kiểm tra nếu email đã tồn tại
+        Optional<NguoiDat> nguoiDatOptional = nguoiDatRepository.findByEmail(email);
 
         if (nguoiDatOptional.isPresent()) {
             // Nếu tồn tại, cập nhật thông tin mới
             NguoiDat nguoiDat = nguoiDatOptional.get();
             nguoiDat.setHo(contactInfo.get("firstName").asText());
             nguoiDat.setTen(contactInfo.get("lastName").asText());
-            nguoiDat.setEmail(contactInfo.get("email").asText());
+            nguoiDat.setSoDienThoai(contactInfo.get("phone").asText());
             return nguoiDatRepository.save(nguoiDat);
         } else {
+
             // Tạo mới nếu chưa tồn tại
             NguoiDat nguoiDat = new NguoiDat();
             nguoiDat.setHo(contactInfo.get("firstName").asText());
             nguoiDat.setTen(contactInfo.get("lastName").asText());
-            nguoiDat.setSoDienThoai(soDienThoai);
-            nguoiDat.setEmail(contactInfo.get("email").asText());
+            nguoiDat.setSoDienThoai(contactInfo.get("phone").asText());
+            nguoiDat.setEmail(email);
+            nguoiDat.setProvider("GOOGLE");
+            nguoiDat.setEnable(true);
+            Role userRole = roleRepostiory.findByName("ROLE_USER")
+                    .orElseThrow(() -> new RuntimeException("Role ROLE_USER not found"));
+            nguoiDat.setRoles(Set.of(userRole));
             return nguoiDatRepository.save(nguoiDat);
         }
     }

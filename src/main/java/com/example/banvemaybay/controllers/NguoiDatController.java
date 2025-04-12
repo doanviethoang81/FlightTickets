@@ -45,18 +45,13 @@ public class NguoiDatController {
 //    private final ActivationCodeCache activationCodeCache;
 
 
-    //tìm người đặt sdt
-    @GetMapping("/{sdt}")
-    public ResponseEntity<?> timVeTheoSdtNguoiDat(
-            @PathVariable("sdt") String sdt
+    //tìm người đặt theo gmail sắp xếp lại theo ngày giờ
+    @GetMapping("/{gmail}")
+    public ResponseEntity<?> timVeTheoGmailNguoiDat(
+            @PathVariable("gmail") String gmail
     ){
         try{
-//            List<PhieuDatVeDTO> phieuDatVeDTOList = phieuDatVeService.getThongTinVeTheoSdt(sdt);
-            NguoiDatDTO nguoiDatDTO = nguoiDatService.timVeDaDatTheoSDT(sdt);
-//            List<ThongTinDatVeDTO> listThongTinDatVeDTO = phieuDatVeService.getThongTinVeTheoSdt(sdt);
-//            NguoiDat nguoiDat = nguoiDatService.timVeDaDatTheoSDT(sdt);
-//            ThongTinDatVe thongTinDatVe= thongTinDatVeService.getThongTinDatVe(nguoiDat);
-//            List<PhieuDatVe> phieuDatVeList = phieuDatVeService.getPhieuDatVe(thongTinDatVe.getId());
+            NguoiDatDTO nguoiDatDTO = nguoiDatService.timVeDaDatTheoGmail(gmail);
             return ResponseEntity.ok(nguoiDatDTO);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -73,7 +68,7 @@ public class NguoiDatController {
                 int orderId = thongTinDatVe.getId();
 
                 String encryptedId = NumberEncryptor.encryptId(orderId);
-                String redirectUrl = "http://localhost:8080/api/v1/payment/vn-pay?amount=" + (long)(totalMoney * 100) + "&id=" + encryptedId;
+                String redirectUrl = "https://flighttickets.onrender.com/api/v1/payment/vn-pay?amount=" + (long)(totalMoney * 100) + "&id=" + encryptedId;
 
                 // Tạo trang HTML có script chuyển hướng
                 String htmlContent = "<html><head>"
@@ -101,10 +96,10 @@ public class NguoiDatController {
         try {
             boolean coMatKhau = nguoiDatService.kiemTraLoaiTaiKhoan(email);
             if (coMatKhau) {
-                response.put("url", "http://localhost:5173/user/change-password-user/" + email);
+                response.put("url", "https://chude2-nhom14.netlify.app/user/change-password-user/" + email);
                 response.put("message", "Đã có mật khẩu, chuyển tới trang đổi mật khẩu.");
             } else {
-                response.put("url", "http://localhost:5173/user/new-password-user/" + email);
+                response.put("url", "https://chude2-nhom14.netlify.app/user/new-password-user/" + email);
                 response.put("message", "Bạn đăng nhập bằng Google nên cần tạo mật khẩu mới.");
                 //tạo random 6 số
                 String activationCode = emailService.generateActivationCode();

@@ -58,7 +58,6 @@ public class PaymentController {
             emailService.sendBookingConfirmationEmail(decodedId);
             redirectUrl = "https://chude2-nhom14.netlify.app/payment-result?status=success";
         } else if ("24".equals(status)) {
-
             thongTinDatVeService.updateTrangThaiThanhToan(decodedId, "Thất bại");
             redirectUrl = "https://chude2-nhom14.netlify.app/payment-result?status=failure"; // Nếu thất bại, chuyển hướng kèm trạng thái
         }
@@ -67,38 +66,4 @@ public class PaymentController {
                 .location(URI.create(redirectUrl)) // Chuyển hướng trực tiếp
                 .build();
     }
-
-//    @GetMapping("/momo/create-payment")
-//    public String createPayment(@RequestParam long amount, @RequestParam String orderId) {
-//        try {
-//            return momoService.createPayment(amount, orderId);
-//        } catch (Exception e) {
-//            return "Lỗi thanh toán MoMo: " + e.getMessage();
-//        }
-//    }
-//
-//    @PostMapping("/momo/payment-notify")
-//    public ResponseEntity<String> paymentNotify(@RequestBody String requestData) {
-//        // Xử lý thông báo từ MoMo (parsing và kiểm tra dữ liệu)
-//        System.out.println("Received MoMo notification: " + requestData);
-//
-//        // Thực hiện các bước xử lý sau khi nhận thông báo (cập nhật trạng thái đơn hàng...)
-//
-//        return ResponseEntity.ok("Success");
-//    }
-//
-//    @GetMapping("/momo/payment-return")
-//    public ResponseEntity<String> paymentReturn(@RequestParam String orderId, @RequestParam String status) {
-//        // Xử lý trạng thái thanh toán sau khi người dùng được điều hướng về returnUrl
-//        if ("success".equals(status)) {
-//            // Xử lý khi thanh toán thành công
-//            System.out.println("Payment successful for orderId: " + orderId);
-//        } else {
-//            // Xử lý khi thanh toán thất bại
-//            System.out.println("Payment failed for orderId: " + orderId);
-//        }
-//
-//        // Trả về kết quả hoặc hiển thị trang thông báo cho người dùng
-//        return ResponseEntity.ok("Payment result: " + status);
-//    }
 }

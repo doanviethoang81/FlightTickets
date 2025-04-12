@@ -28,16 +28,6 @@ public class NguoiDatAdminController {
         return ResponseEntity.ok(nguoiDats);
     }
 
-    @GetMapping("/{sdt}")
-    public ResponseEntity<?> getThongTinDatVe(@PathVariable("sdt") String sdt){
-        try{
-            NguoiDatDTO nguoiDatDTO = nguoiDatService.timVeDaDatTheoSDT(sdt);
-            return ResponseEntity.ok(nguoiDatDTO);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-
     @GetMapping("/role/{roleName}")
     public ResponseEntity<?> getUsersByRoleName(@PathVariable String roleName) {
         List<UserRoleAdminDTO> users = nguoiDatService.getAllNguoiDatByRoleName(roleName);

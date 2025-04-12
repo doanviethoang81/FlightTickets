@@ -1,8 +1,10 @@
 package com.example.banvemaybay.controllers;
 
 import com.example.banvemaybay.models.Post;
+import com.example.banvemaybay.services.ImageUploadService;
 import com.example.banvemaybay.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,11 +18,14 @@ import java.util.UUID;
 @RestController
 @RequestMapping("${api.prefix:/api/v1}/posts")
 public class PostController {
-    @Autowired
-    private PostService postService;
 
-    // Đường dẫn động: hoạt động cả khi local và Docker
-    private final String uploadDir = System.getProperty("user.dir") + "/images/";
+    private final PostService postService;
+    private final ImageUploadService imageUploadService;
+
+    public PostController(PostService postService, ImageUploadService imageUploadService) {
+        this.postService = postService;
+        this.imageUploadService = imageUploadService;
+    }
 
     @GetMapping
     public List<Post> getAllPosts() {
@@ -28,30 +33,25 @@ public class PostController {
     }
 
     @PostMapping
-    public Post createPost(@RequestParam("title") String title,
-                           @RequestParam("content") String content,
-                           @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
+    public ResponseEntity<?> createPost(@RequestParam("title") String title,
+                                        @RequestParam("content") String content,
+                                        @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
         Post post = new Post();
         post.setTitle(title);
         post.setContent(content);
 
         if (image != null && !image.isEmpty()) {
-            // Tạo tên ảnh duy nhất
-            String imageName = UUID.randomUUID() + "_" + image.getOriginalFilename();
-
-            // Tạo thư mục nếu chưa tồn tại
-            File uploadFolder = new File(uploadDir);
-            if (!uploadFolder.exists()) {
-                uploadFolder.mkdirs();
+            // Kiểm tra định dạng file
+            String contentType = image.getContentType();
+            if (!contentType.startsWith("image/")) {
+                return ResponseEntity.badRequest().body("File tải lên không phải là ảnh.");
             }
-
-            // Lưu ảnh vào thư mục
-            Path filePath = Paths.get(uploadDir, imageName);
-            image.transferTo(filePath.toFile());
-
-            post.setImageUrl(imageName); // chỉ lưu tên ảnh
+            String imageUrl = imageUploadService.uploadImage(image);
+            post.setImageUrl(imageUrl);
         }
 
-        return postService.savePost(post);
+        Post savedPost = postService.savePost(post);
+        return ResponseEntity.ok(savedPost);
     }
+
 }

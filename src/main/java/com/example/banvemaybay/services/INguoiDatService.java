@@ -7,7 +7,7 @@ import com.example.banvemaybay.models.NguoiDat;
 import java.util.List;
 
 public interface INguoiDatService {
-    NguoiDatDTO timVeDaDatTheoSDT(String sdt);
+    NguoiDatDTO timVeDaDatTheoGmail(String sdt);
 
     NguoiDat save(NguoiDat nguoiDat);
 
