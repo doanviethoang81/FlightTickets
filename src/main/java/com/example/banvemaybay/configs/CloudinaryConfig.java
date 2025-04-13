@@ -1,6 +1,7 @@
 package com.example.banvemaybay.configs;
 
 import com.cloudinary.Cloudinary;
+import com.example.banvemaybay.utils.EnvUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,9 +15,13 @@ public class CloudinaryConfig {
 //    private final String apiKey = System.getProperty("CLOUDINARY_KEY");
 //    private final String apiSecret = System.getProperty("CLOUDINARY_SECRET");
 
-    private final String cloudName = System.getenv("CLOUDINARY_NAME");
-    private final String apiKey = System.getenv("CLOUDINARY_KEY");
-    private final String apiSecret = System.getenv("CLOUDINARY_SECRET");
+//    private final String cloudName = System.getenv("CLOUDINARY_NAME");
+//    private final String apiKey = System.getenv("CLOUDINARY_KEY");
+//    private final String apiSecret = System.getenv("CLOUDINARY_SECRET");
+
+    private final String cloudName = EnvUtil.get("CLOUDINARY_NAME");
+    private final String apiKey = EnvUtil.get("CLOUDINARY_KEY");
+    private final String apiSecret = EnvUtil.get("CLOUDINARY_SECRET");
 
     @Bean
     public Cloudinary cloudinary() {

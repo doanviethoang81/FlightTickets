@@ -7,17 +7,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DotenvConfig {
     private static final Dotenv dotenv = Dotenv.configure()
-            .ignoreIfMissing() // tránh lỗi nếu chưa có file .env
+            .ignoreIfMissing() // để local dùng file .env, còn Render thì không có file này
             .load();
-
-    public static String get(String key) {
-        return dotenv.get(key);
-    }
 
     @PostConstruct
     public void init() {
         dotenv.entries().forEach(entry -> {
-            System.setProperty(entry.getKey(), entry.getValue());
+            // nếu chưa có biến môi trường hệ thống, thì mới set
+            if (System.getenv(entry.getKey()) == null) {
+                System.setProperty(entry.getKey(), entry.getValue());
+            }
         });
     }
 }

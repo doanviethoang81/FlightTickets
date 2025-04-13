@@ -1,5 +1,6 @@
 package com.example.banvemaybay.configs;
 
+import com.example.banvemaybay.utils.EnvUtil;
 import com.example.banvemaybay.utils.VNPayUtil;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,8 +14,8 @@ public class VNPAYConfig {
 
     private final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     private final String vnp_ReturnUrl = "https://flighttickets.onrender.com/api/v1/payment/vn-pay-callback";
-    private final String vnp_TmnCode = System.getenv("VNPAY_TMN_CODE");
-    private final String secretKey = System.getenv("VNPAY_HASH_SECRET");
+    private final String vnp_TmnCode = EnvUtil.get("VNPAY_TMN_CODE");
+    private final String secretKey = EnvUtil.get("VNPAY_HASH_SECRET");
     private final String vnp_Version = "2.1.0";
     private final String vnp_Command = "pay";
     private final String orderType = "other";
