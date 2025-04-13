@@ -10,9 +10,13 @@ import java.util.Map;
 @Configuration
 public class CloudinaryConfig {
 
-    private final String cloudName = System.getProperty("CLOUDINARY_NAME");
-    private final String apiKey = System.getProperty("CLOUDINARY_KEY");
-    private final String apiSecret = System.getProperty("CLOUDINARY_SECRET");
+//    private final String cloudName = System.getProperty("CLOUDINARY_NAME");
+//    private final String apiKey = System.getProperty("CLOUDINARY_KEY");
+//    private final String apiSecret = System.getProperty("CLOUDINARY_SECRET");
+
+    private final String cloudName = System.getenv("CLOUDINARY_NAME");
+    private final String apiKey = System.getenv("CLOUDINARY_KEY");
+    private final String apiSecret = System.getenv("CLOUDINARY_SECRET");
 
     @Bean
     public Cloudinary cloudinary() {
