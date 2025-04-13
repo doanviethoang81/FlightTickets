@@ -94,8 +94,8 @@ public class SecurityConfigs {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/api/v1/posts/**").permitAll()
                         .requestMatchers("/api/v1/payment/vn-pay-callback").permitAll()
-                        .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/oauth2/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN") // Giới hạn quyền admin
