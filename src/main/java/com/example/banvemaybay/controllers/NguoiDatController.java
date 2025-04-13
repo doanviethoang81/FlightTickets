@@ -68,7 +68,7 @@ public class NguoiDatController {
                 int orderId = thongTinDatVe.getId();
 
                 String encryptedId = NumberEncryptor.encryptId(orderId);
-                String redirectUrl = "https://flighttickets.onrender.com/api/v1/payment/vn-pay?amount=" + (long)(totalMoney * 100) + "&id=" + encryptedId;
+                String redirectUrl = "http://localhost:8080/api/v1/payment/vn-pay?amount=" + (long)(totalMoney * 100) + "&id=" + encryptedId;
 
                 // Tạo trang HTML có script chuyển hướng
                 String htmlContent = "<html><head>"
