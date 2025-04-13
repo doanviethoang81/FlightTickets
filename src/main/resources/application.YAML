@@ -12,6 +12,7 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
+    open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: none
