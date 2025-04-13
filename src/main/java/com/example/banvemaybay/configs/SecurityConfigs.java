@@ -28,6 +28,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.net.URLEncoder;
 import java.util.Optional;
@@ -49,6 +50,9 @@ public class SecurityConfigs {
 
     @Autowired
     private RoleRepostiory roleRepostiory;
+
+    @Autowired
+    private CorsConfigurationSource corsConfigurationSource;
 
     public SecurityConfigs(CustomUserDetailService customUserDetailService, JWTUtil jwtUtil) {
         this.customUserDetailService = customUserDetailService;
@@ -95,7 +99,7 @@ public class SecurityConfigs {
                         .requestMatchers("/api/v1/adminn/**").hasAuthority("ROLE_ADMIN") // Giới hạn quyền admin
                         .anyRequest().authenticated()
                 )
-                .cors(Customizer.withDefaults())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .addFilterBefore(new JWTAuthenticationFilter(jwtUtil, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
