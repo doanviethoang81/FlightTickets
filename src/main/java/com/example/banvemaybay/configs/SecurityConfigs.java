@@ -5,6 +5,7 @@ import com.example.banvemaybay.models.Role;
 import com.example.banvemaybay.repositorys.NguoiDatRepository;
 import com.example.banvemaybay.repositorys.RoleRepostiory;
 import com.example.banvemaybay.services.CustomUserDetailService;
+import com.example.banvemaybay.utils.EnvUtil;
 import com.example.banvemaybay.utils.JWTUtil;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ import java.util.Set;
 @EnableWebSecurity
 public class SecurityConfigs {
 
-    private final String client_id = System.getProperty("GOOGLE_CLIENT_ID");
-    private final String client_secret = System.getProperty("GOOGLE_CLIENT_SECRET");
+    private final String client_id = EnvUtil.get("GOOGLE_CLIENT_ID");
+    private final String client_secret = EnvUtil.get("GOOGLE_CLIENT_SECRET");
 
     private final CustomUserDetailService customUserDetailService;
     private final JWTUtil jwtUtil;
