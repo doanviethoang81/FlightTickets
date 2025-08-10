@@ -5,12 +5,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 @Component
 public class JWTUtil {
 

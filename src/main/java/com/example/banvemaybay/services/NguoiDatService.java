@@ -121,11 +121,13 @@ public class NguoiDatService implements INguoiDatService{
 
     @Override
     public NguoiDat save(NguoiDat nguoiDat) {
+
         return nguoiDatRepository.save(nguoiDat);
     }
 
     @Override
     public List<NguoiDat> getAllNguoiDat() {
+
         return nguoiDatRepository.findAll();
     }
 

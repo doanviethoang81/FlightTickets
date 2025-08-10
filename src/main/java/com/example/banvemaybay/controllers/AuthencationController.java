@@ -42,10 +42,8 @@ public class AuthencationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
     @Autowired
     private EmailService emailService;
-
 
     @Autowired
     private RoleRepostiory roleRepository;

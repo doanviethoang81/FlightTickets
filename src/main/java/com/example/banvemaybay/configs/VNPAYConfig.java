@@ -34,11 +34,9 @@ public class VNPAYConfig {
         vnpParamsMap.put("vnp_Locale", "vn");
         vnpParamsMap.put("vnp_ReturnUrl", this.vnp_ReturnUrl);
 
-        // ✅ Múi giờ chuẩn cho Việt Nam
         ZoneId vietnamZoneId = ZoneId.of("Asia/Ho_Chi_Minh");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
-        // ✅ Thời gian hiện tại + thời gian hết hạn
         ZonedDateTime currentTime = ZonedDateTime.now(vietnamZoneId);
         String vnpCreateDate = currentTime.format(formatter);
         String vnpExpireDate = currentTime.plusMinutes(15).format(formatter); // Hết hạn sau 15 phút
